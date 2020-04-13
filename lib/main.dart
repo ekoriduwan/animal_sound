@@ -12,13 +12,27 @@ void main() {
 class Home extends StatelessWidget {
   static AudioCache player = AudioCache();
 
+  void playSound(String animalName) {
+    final player = AudioCache();
+    player.play('$animalName.wav');
+  }
+
+  Container _buildWidget(String animalName) {
+    return Container(
+        margin: EdgeInsets.all(10),
+        child: InkWell(
+          onTap: () {
+            playSound(animalName);
+          },
+          child: Card(
+            elevation: 4,
+            child: Image.asset('img/$animalName.png'),
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    void playSound(String animalName) {
-      final player = AudioCache();
-      player.play('$animalName.wav');
-    }
-
     return Scaffold(
       backgroundColor: Colors.teal,
       body: Column(
@@ -35,50 +49,10 @@ class Home extends StatelessWidget {
               )),
           Expanded(
             child: GridView.count(crossAxisCount: 2, children: [
-              Container(
-                  margin: EdgeInsets.all(10),
-                  child: InkWell(
-                    onTap: () {
-                      playSound("cow");
-                    },
-                    child: Card(
-                      elevation: 4,
-                      child: Image.asset('img/cow.png'),
-                    ),
-                  )),
-              Container(
-                  margin: EdgeInsets.all(10),
-                  child: InkWell(
-                    onTap: () {
-                      playSound("cat");
-                    },
-                    child: Card(
-                      elevation: 4,
-                      child: Image.asset('img/cat.png'),
-                    ),
-                  )),
-              Container(
-                  margin: EdgeInsets.all(10),
-                  child: InkWell(
-                    onTap: () {
-                      playSound("chicken");
-                    },
-                    child: Card(
-                      elevation: 4,
-                      child: Image.asset('img/chicken.png'),
-                    ),
-                  )),
-              Container(
-                  margin: EdgeInsets.all(10),
-                  child: InkWell(
-                    onTap: () {
-                      playSound("sheep");
-                    },
-                    child: Card(
-                      elevation: 4,
-                      child: Image.asset('img/sheep.png'),
-                    ),
-                  )),
+              _buildWidget("cow"),
+              _buildWidget("cat"),
+              _buildWidget("chicken"),
+              _buildWidget("sheep"),
             ]),
           ),
           Container(
